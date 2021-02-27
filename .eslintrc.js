@@ -32,8 +32,7 @@ module.exports = {
     'no-console': ['error', { allow: ['tron'] }],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
-    'no-console': 'off',
-    'no-unused-vars': 'off',
+    'no-use-before-define': 'off',
   },
   settings: {
     'import/resolver': {

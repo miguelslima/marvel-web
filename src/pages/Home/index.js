@@ -1,40 +1,41 @@
 import React, { useEffect, useState } from 'react';
+import Search from '../../components/Search';
 
-import api from '../../services/api';
-// URL_API = `https:gateway.marvel.com/v1/public/characters?ts=1&apikey=${this.PUBLIC_KEY}&hash=${this.HASH}`;
+import { listCharacters } from '../../services/api';
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
-  const [comics, setComics] = useState([]);
+  const [totalChars, setTotalChars] = useState(0);
+  const [characters, setCharacters] = useState([]);
 
   useEffect(() => {
-    async function loadApi() {
+    async function loadCharacters() {
       setLoading(true);
-      const response = await api.get(
-        `comics?ts=thegnomecrazy&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${process.env.REACT_APP_MD5_HASH}`
-      );
 
-      setComics(response.data.data.results);
+      await listCharacters(null, null, (results) => {
+        setTotalChars(results.total);
+        setCharacters(results.results);
+      });
       setLoading(false);
     }
 
-    loadApi();
+    loadCharacters();
   }, []);
-  console.log(comics);
 
   return (
     <div>
       <h1>Home</h1>
+      <Search />
+
+      <h1>Personagens ({`${characters.length} de ${totalChars}`})</h1>
       {loading === true ? (
         <h1>Carregando</h1>
       ) : (
-        <>
-          {comics.map((comic, index) => (
-            <div>
-              <h2>{comic.title}</h2>
-            </div>
+        <div>
+          {characters.map((character) => (
+            <p>{character.name}</p>
           ))}
-        </>
+        </div>
       )}
     </div>
   );
