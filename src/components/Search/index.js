@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { listCharacters } from '../../services/api';
 
+import './styles.css';
 // import { Container } from './styles';
 
 function Search() {
@@ -13,47 +14,45 @@ function Search() {
   const handleSearch = (e) => {
     const query = e.target.value;
     setSearch(e.target.value);
-    listCharacters(query, null, (results) => setSearchResults(results));
+    listCharacters(query, null, (results) => setSearchResults(results.results));
 
     if (searchResults.length === 0) {
       setLoading(true);
-    } else {
+    } else if (searchResults.length > 3) {
       setLoading(false);
     }
   };
 
-  // const handleDescriptionCharacter = ({ id }) => {
-  //   console.log('Enviado dados de ' + id);
-  // };
-
   return (
-    <div>
-      <input
-        placeholder="Digite o nome do personagem"
-        value={search}
-        onChange={handleSearch}
-      />
+    <div className="search">
+      <div className="search__container">
+        <input
+          className="search__input"
+          placeholder="Digite o nome do personagem"
+          value={search}
+          onChange={handleSearch}
+        />
+      </div>
       {loading === true ? (
         <div>
           <h1>Carregando</h1>
         </div>
       ) : (
-        <div>
-          {searchResults.map((result) => {
-            return (
-              <ul>
+        <ul className="search__dropdown">
+          {searchResults.length > 0 &&
+            searchResults.map((character) => (
+              <li>
                 <Link
                   to={{
                     pathname: '/character',
-                    state: { id: `${result.id}` },
+                    state: { id: `${character.id}` },
                   }}
                 >
-                  {result.name}
+                  {character.name}
                 </Link>
-              </ul>
-            );
-          })}
-        </div>
+              </li>
+            ))}
+        </ul>
       )}
     </div>
   );

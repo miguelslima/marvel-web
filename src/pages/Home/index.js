@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Search from '../../components/Search';
 
 import { listCharacters } from '../../services/api';
 
-export default function Home() {
+function Home() {
   const [loading, setLoading] = useState(false);
   const [totalChars, setTotalChars] = useState(0);
   const [characters, setCharacters] = useState([]);
@@ -12,7 +11,6 @@ export default function Home() {
   useEffect(() => {
     async function loadCharacters() {
       setLoading(true);
-
       await listCharacters(null, offset, (results) => {
         setTotalChars(results.total);
         setCharacters(results.results);
@@ -27,20 +25,23 @@ export default function Home() {
     if (offset === 0) {
       return;
     }
+
+    setTimeout(() => {
+      setLoading(true);
+    }, 2000);
     setOffset(offset - 20);
   };
 
   const handleNextButton = () => {
+    setLoading(true);
     if (offset >= 0) {
       setOffset(offset + 20);
     }
+    setLoading(false);
   };
 
   return (
     <div>
-      <h1>Home</h1>
-      <Search />
-
       <h1>Personagens ({`${offset + 20} de ${totalChars}`})</h1>
       {loading === true ? (
         <h1>Carregando</h1>
@@ -52,11 +53,14 @@ export default function Home() {
           <button type="button" onClick={handleNextButton}>
             Next
           </button>
-          {characters.map((character) => (
-            <p>{character.name}</p>
+          {characters.map((character, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <p key={index}>{character.name}</p>
           ))}
         </div>
       )}
     </div>
   );
 }
+
+export default Home;

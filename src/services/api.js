@@ -1,4 +1,4 @@
-import md5 from 'md5';
+// import md5 from 'md5';
 
 const MAX_RESULTS = 20;
 const API_BASE_URL = 'https://gateway.marvel.com/v1/public/';
@@ -61,11 +61,13 @@ const processRequestError = (error) => {
 };
 
 const getHash = () => {
-  const timestamp = new Date().getTime();
-  const md5Hash = md5(
-    timestamp +
-      process.env.REACT_APP_PRIVATE_KEY +
-      process.env.REACT_APP_PUBLIC_KEY
-  );
-  return `ts=${timestamp}&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${md5Hash}`;
+  const timestamp = '1';
+  const apiKey = '862acd0466e815a90d5cec24cb5fa4bf';
+  const hash = '30dc7ee6f8fe336d503cee23dfe400a4';
+  // const md5Hash = md5(
+  //   timestamp +
+  //     process.env.REACT_APP_PRIVATE_KEY +
+  //     process.env.REACT_APP_PUBLIC_KEY
+  // );
+  return `ts=${timestamp}&apikey=${apiKey}&hash=${hash}`;
 };
