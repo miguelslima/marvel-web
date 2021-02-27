@@ -3,9 +3,9 @@ import md5 from 'md5';
 const MAX_RESULTS = 20;
 const API_BASE_URL = 'https://gateway.marvel.com/v1/public/';
 
-const getMaxResults = () => {
-  return MAX_RESULTS;
-};
+// const getMaxResults = () => {
+//   return MAX_RESULTS;
+// };
 
 export const readCharacterById = (id, callback) => {
   fetch(getReadCharacterByIdURL(id))
@@ -31,13 +31,13 @@ const getListCharactersURL = (name, offset) => {
     : `${API_BASE_URL}characters?limit=${MAX_RESULTS}&offset=${offset}&${getHash()}`;
 };
 
-const readRandomCharacter = (callback) => {
-  const offset = Math.floor(Math.random() * 1000);
-  listCharacters(null, offset, (characters) => {
-    const index = Math.floor(Math.random() * characters.length);
-    callback(characters[index].id);
-  });
-};
+// const readRandomCharacter = (callback) => {
+//   const offset = Math.floor(Math.random() * 1000);
+//   listCharacters(null, offset, (characters) => {
+//     const index = Math.floor(Math.random() * characters.length);
+//     callback(characters[index].id);
+//   });
+// };
 
 export const listComics = (id, callback) => {
   fetch(readComicURL(id))
