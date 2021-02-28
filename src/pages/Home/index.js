@@ -82,7 +82,8 @@ function Home() {
                   width: 200,
                   margin: 10,
                   textAlign: 'center',
-                  border: '2px solid red',
+                  border: '2px solid #A00001',
+                  boxShadow: '1px 4px 15px rgba(50, 50, 50, 0.77)',
                 }}
               >
                 <img

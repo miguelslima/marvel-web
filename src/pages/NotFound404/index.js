@@ -17,12 +17,16 @@ function NotFound404() {
         style={{
           height: '100%',
           width: '100%',
+          display: 'flex',
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
           backgroundColor: 'rgba(0, 0, 0, 0.5)',
         }}
       >
         <h1
           style={{
-            color: '#f00',
+            color: '#A00900',
           }}
         >
           Página não encontrada

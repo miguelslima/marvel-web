@@ -28,7 +28,7 @@ function Character() {
       {loading === true ? (
         <h1>Carregando</h1>
       ) : (
-        <>
+        <div style={{ padding: 20 }}>
           <h1>{character.name}</h1>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <img
@@ -63,13 +63,22 @@ function Character() {
             </div>
           </div>
 
-          <div>
+          <div style={{ marginBottom: 80 }}>
             <h3>Comics</h3>
             {comics.map((comic) => (
-              <img style={{ width: 100, height: 100 }} src={comic} alt="" />
+              <img
+                style={{
+                  width: 200,
+                  height: 150,
+                  margin: 10,
+                  boxShadow: '9px 7px 5px rgba(50, 50, 50, 0.77)',
+                }}
+                src={comic}
+                alt=""
+              />
             ))}
           </div>
-        </>
+        </div>
       )}
     </div>
   );
