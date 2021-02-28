@@ -11,10 +11,19 @@ function Home() {
   useEffect(() => {
     async function loadCharacters() {
       setLoading(true);
+
       await listCharacters(null, offset, (results) => {
+        if (JSON.parse(localStorage.getItem('@marvel/characters').length > 0)) {
+          setCharacters(results.results);
+        }
         setTotalChars(results.total);
         setCharacters(results.results);
       });
+      localStorage.setItem(
+        '@marvel/totalCharacters',
+        JSON.stringify(totalChars)
+      );
+      localStorage.setItem('@marvel/characters', JSON.stringify(characters));
       setLoading(false);
     }
 
@@ -26,22 +35,19 @@ function Home() {
       return;
     }
 
-    setTimeout(() => {
-      setLoading(true);
-    }, 2000);
     setOffset(offset - 20);
   };
 
   const handleNextButton = () => {
-    setLoading(true);
     if (offset >= 0) {
+      setLoading(true);
       setOffset(offset + 20);
     }
     setLoading(false);
   };
 
   return (
-    <div>
+    <div style={{ marginBottom: 60 }}>
       <h1 style={{ textAlign: 'center' }}>
         Personagens ({`${offset + 20} de ${totalChars}`})
       </h1>
@@ -71,9 +77,16 @@ function Home() {
           >
             {characters.map((character) => (
               // eslint-disable-next-line react/no-array-index-key
-              <div style={{ margin: 10 }}>
+              <div
+                style={{
+                  width: 200,
+                  margin: 10,
+                  textAlign: 'center',
+                  border: '2px solid red',
+                }}
+              >
                 <img
-                  style={{ width: 150, height: 150 }}
+                  style={{ width: 196, height: 200 }}
                   src={`${
                     character.thumbnail
                       ? `${character.thumbnail.path}.${character.thumbnail.extension}`
@@ -81,7 +94,12 @@ function Home() {
                   }`}
                   alt={character.name}
                 />
-                <p>{character.name}</p>
+                <p style={{ backgroundColor: '#ddd' }}>{character.name}</p>
+                <p style={{ fontSize: 12 }}>
+                  {character.description
+                    ? character.description
+                    : 'Personagem sem descrição'}
+                </p>
               </div>
             ))}
           </div>

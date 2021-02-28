@@ -16,6 +16,12 @@ function Search() {
     setSearch(e.target.value);
     listCharacters(query, null, (results) => setSearchResults(results.results));
 
+    // const cachedHits = localStorage.getItem(query);
+
+    // if (cachedHits) {
+    //   this.setState({ hits: JSON.parse(cachedHits) });
+    // }
+
     if (searchResults.length === 0) {
       setLoading(true);
     } else if (searchResults.length > 3) {

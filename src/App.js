@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Pagina404 from './pages/NotFound404';
 import './styles/global.css';
 import Sobre from './pages/Sobre';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/search" component={Search} />
         <Route path="" component={Pagina404} />
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 }

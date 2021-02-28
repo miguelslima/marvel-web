@@ -1,0 +1,13 @@
+footer {
+  background-color: #a00001;
+  padding: 10px;
+}
+
+footer > p:first-child {
+  font-size: 20px;
+}
+
+footer p {
+  text-align: center;
+  font-size: 16px;
+}
