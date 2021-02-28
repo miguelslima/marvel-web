@@ -28,7 +28,7 @@
 }
 
 .search__input::placeholder {
-  color: var(--input-color);
+  color: var(--text);
 }
 
 .search__dropdown {

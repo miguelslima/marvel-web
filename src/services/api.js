@@ -62,8 +62,8 @@ const processRequestError = (error) => {
 
 const getHash = () => {
   const timestamp = '1';
-  const apiKey = '862acd0466e815a90d5cec24cb5fa4bf';
-  const hash = '30dc7ee6f8fe336d503cee23dfe400a4';
+  const apiKey = '57a1a3bed71f089b1352bee0703ccbfe';
+  const hash = '03e206b64b2c7dd6eea20b183d2f259d';
   // const md5Hash = md5(
   //   timestamp +
   //     process.env.REACT_APP_PRIVATE_KEY +
