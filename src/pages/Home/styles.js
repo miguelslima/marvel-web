@@ -15,6 +15,8 @@ export const ButtonContainer = styled.div`
   justify-content: center;
   margin: 20px 0;
 
+  margin-bottom: 80px;
+
   button {
     margin-left: 10px;
     width: 100px;
@@ -38,8 +40,6 @@ export const CardCharactersContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-
-  margin-bottom: 80px;
 `;
 
 export const CardCharacters = styled.div`
@@ -50,7 +50,7 @@ export const CardCharacters = styled.div`
 
   text-align: center;
   border: 2px solid #a00001;
-  box-shadow: 1px 4px 15px rgba(50, 50, 50, 0.77);
+  box-shadow: 1px 4px 9px rgba(160, 0, 1, 0.77);
 
   display: flex;
   flex-direction: column;

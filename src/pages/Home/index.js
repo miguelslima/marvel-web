@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { listCharacters } from '../../services/api';
 import Loading from '../../components/Loading';
-
+import Search from '../../components/Search';
 import apiFake from '../../marvelApi.json';
 import {
   Container,
@@ -17,19 +17,18 @@ import {
 } from './styles';
 
 function Home() {
-  const [loading, setLoading] = useState(false);
-  const [totalChars, setTotalChars] = useState(
-    JSON.parse(localStorage.getItem('@marvel/totalCharacters' || 0))
-  );
-  const [characters, setCharacters] = useState(
-    JSON.parse(localStorage.getItem('@marvel/characters' || []))
-  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [totalChars, setTotalChars] = useState(0);
+
+  const [characters, setCharacters] = useState([]);
 
   const [offset, setOffset] = useState(0);
+  const [search, setSearch] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     async function loadCharacters() {
-      setLoading(true);
+      setIsLoading(true);
 
       await listCharacters(null, offset, (results) => {
         if (results.code === 'RequestThrottled') {
@@ -47,11 +46,11 @@ function Home() {
         JSON.stringify(totalChars)
       );
       localStorage.setItem('@marvel/characters', JSON.stringify(characters));
-      setLoading(false);
+      setIsLoading(false);
     }
 
     loadCharacters();
-  }, [offset, characters, totalChars]);
+  }, []);
 
   const handlePreviousButton = () => {
     if (offset === 0) {
@@ -63,62 +62,135 @@ function Home() {
 
   const handleNextButton = () => {
     if (offset >= 0) {
-      setLoading(true);
+      setIsLoading(true);
       setOffset(offset + 20);
     }
-    setLoading(false);
+    setIsLoading(false);
   };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSearch(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const query = search;
+    console.log(query);
+    setSearch(e.target.value);
+    await listCharacters(query, null, (results) => {
+      console.log(results);
+      if (results.code === 200) {
+        setSearchResults(results.data.results);
+      }
+    });
+
+    // const cachedHits = localStorage.getItem(query);
+
+    // if (cachedHits) {
+    //   this.setState({ hits: JSON.parse(cachedHits) });
+    // }
+
+    // this.props.history.push(`?query=${this.state.inputTerm}`);
+  };
+
+  console.log(searchResults);
 
   return (
     <Container>
-      {loading === true ? (
+      <Search
+        value={search}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        placeholder="Search for Characters by Name"
+      />
+      {isLoading ? (
         <Loading />
       ) : (
-        <ContainerCharacters>
-          <Title>Personagens ({`${offset + 20} de ${totalChars}`})</Title>
-          <ButtonContainer>
-            <button type="button" onClick={handlePreviousButton}>
-              Previous
-            </button>
-            <button type="button" onClick={handleNextButton}>
-              Next
-            </button>
-          </ButtonContainer>
-          <CardCharactersContainer>
-            {characters.map((character) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <CardCharacters>
-                <img
-                  src={`${
-                    character.thumbnail
-                      ? `${character.thumbnail.path}.${character.thumbnail.extension}`
-                      : null
-                  }`}
-                  alt={character.name}
-                />
-                <CardDescriptionCharacters>
-                  <CharacterName numberOfLines={1} ellipsizeMode="middle">
-                    {character.name}
-                  </CharacterName>
-                  <CharacterDescription
-                    numberOfLines={1}
-                    ellipsizeMode="middle"
-                  >
-                    {character.description === ''
-                      ? 'Personagem sem descrição'
-                      : character.description}
-                  </CharacterDescription>
-                  <CharacterNumber>
-                    <p>Series {character.series.available}</p>
-                    <p>Comics {character.comics.available}</p>
-                    <p>Stories {character.stories.available}</p>
-                  </CharacterNumber>
-                </CardDescriptionCharacters>
-              </CardCharacters>
-            ))}
-          </CardCharactersContainer>
-        </ContainerCharacters>
+        <>
+          <ContainerCharacters>
+            {searchResults.length > 0 ? (
+              <CardCharactersContainer>
+                {searchResults.map((character) => (
+                  // eslint-disable-next-line react/no-array-index-key
+                  <CardCharacters>
+                    <img
+                      src={`${
+                        character.thumbnail
+                          ? `${character.thumbnail.path}.${character.thumbnail.extension}`
+                          : null
+                      }`}
+                      alt={character.name}
+                    />
+                    <CardDescriptionCharacters>
+                      <CharacterName numberOfLines={1} ellipsizeMode="middle">
+                        {character.name}
+                      </CharacterName>
+                      <CharacterDescription
+                        numberOfLines={1}
+                        ellipsizeMode="middle"
+                      >
+                        {character.description === ''
+                          ? 'Personagem sem descrição'
+                          : character.description}
+                      </CharacterDescription>
+                      <CharacterNumber>
+                        <p>Series {character.series.available}</p>
+                        <p>Comics {character.comics.available}</p>
+                        <p>Stories {character.stories.available}</p>
+                      </CharacterNumber>
+                    </CardDescriptionCharacters>
+                  </CardCharacters>
+                ))}
+              </CardCharactersContainer>
+            ) : (
+              <CardCharactersContainer>
+                <Title>Personagens ({`${offset + 20} de ${totalChars}`})</Title>
+
+                {characters.map((character) => (
+                  // eslint-disable-next-line react/no-array-index-key
+                  <CardCharacters>
+                    <img
+                      src={`${
+                        character.thumbnail
+                          ? `${character.thumbnail.path}.${character.thumbnail.extension}`
+                          : null
+                      }`}
+                      alt={character.name}
+                    />
+                    <CardDescriptionCharacters>
+                      <CharacterName numberOfLines={1} ellipsizeMode="middle">
+                        {character.name}
+                      </CharacterName>
+                      <CharacterDescription
+                        numberOfLines={1}
+                        ellipsizeMode="middle"
+                      >
+                        {character.description === ''
+                          ? 'Personagem sem descrição'
+                          : character.description}
+                      </CharacterDescription>
+                      <CharacterNumber>
+                        <p>Series {character.series.available}</p>
+                        <p>Comics {character.comics.available}</p>
+                        <p>Stories {character.stories.available}</p>
+                      </CharacterNumber>
+                    </CardDescriptionCharacters>
+                  </CardCharacters>
+                ))}
+              </CardCharactersContainer>
+            )}
+          </ContainerCharacters>
+        </>
       )}
+      <ButtonContainer>
+        <button type="button" onClick={handlePreviousButton}>
+          Previous
+        </button>
+        <button type="button" onClick={handleNextButton}>
+          Next
+        </button>
+      </ButtonContainer>
     </Container>
   );
 }
