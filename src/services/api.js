@@ -21,7 +21,7 @@ export const getReadCharacterByIdURL = (id) => {
 export const listCharacters = (name, offset, callback) => {
   fetch(getListCharactersURL(name, offset))
     .then((response) => response.json())
-    .then((response) => callback(response.data))
+    .then((response) => callback(response))
     .catch((error) => processRequestError(error));
 };
 
@@ -61,11 +61,15 @@ const processRequestError = (error) => {
 };
 
 const getHash = () => {
+  const timestamp = 'thegnomecrazy';
   // const timestamp = new Date().getTime();
-  const timestamp = '1';
-  const apiKey = '042fa69788c764bd7ef961031ba5c4bb';
+  // const timestamp = '1';
+  // const apiKey = '042fa69788c764bd7ef961031ba5c4bb';
   // const privateKey = '1b2e8c7fd3399053a8185a471baba77e15262ba8';
-  const hash = '5ac7c5cce6eb3c55c381efa992fb9c4f';
+  // const hash = '5ac7c5cce6eb3c55c381efa992fb9c4f';
   // const hash = md5(`${timestamp}${privateKey}${apiKey}`);
-  return `ts=${timestamp}&apikey=${apiKey}&hash=${hash}`;
+  // const hash = md5(
+  //   `${timestamp}${process.env.REACT_APP_PRIVATE_KEY}${process.env.REACT_APP_PUBLIC_KEY}`
+  // );
+  return `ts=${timestamp}&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${process.env.REACT_APP_MD5_HASH}`;
 };

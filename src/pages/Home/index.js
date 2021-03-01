@@ -1,11 +1,30 @@
 import React, { useEffect, useState } from 'react';
-
 import { listCharacters } from '../../services/api';
+import Loading from '../../components/Loading';
+
+import apiFake from '../../marvelApi.json';
+import {
+  Container,
+  Title,
+  ContainerCharacters,
+  ButtonContainer,
+  CardCharactersContainer,
+  CardCharacters,
+  CardDescriptionCharacters,
+  CharacterName,
+  CharacterDescription,
+  CharacterNumber,
+} from './styles';
 
 function Home() {
   const [loading, setLoading] = useState(false);
-  const [totalChars, setTotalChars] = useState(0);
-  const [characters, setCharacters] = useState([]);
+  const [totalChars, setTotalChars] = useState(
+    JSON.parse(localStorage.getItem('@marvel/totalCharacters' || 0))
+  );
+  const [characters, setCharacters] = useState(
+    JSON.parse(localStorage.getItem('@marvel/characters' || []))
+  );
+
   const [offset, setOffset] = useState(0);
 
   useEffect(() => {
@@ -13,11 +32,15 @@ function Home() {
       setLoading(true);
 
       await listCharacters(null, offset, (results) => {
-        if (JSON.parse(localStorage.getItem('@marvel/characters').length > 0)) {
-          setCharacters(results.results);
+        if (results.code === 'RequestThrottled') {
+          setTotalChars(apiFake.data.total);
+          setCharacters(apiFake.data.results);
         }
-        setTotalChars(results.total);
-        setCharacters(results.results);
+        if (JSON.parse(localStorage.getItem('@marvel/characters').length > 0)) {
+          setCharacters(results.data.results);
+        }
+        setTotalChars(results.data.total);
+        setCharacters(results.data.results);
       });
       localStorage.setItem(
         '@marvel/totalCharacters',
@@ -28,7 +51,7 @@ function Home() {
     }
 
     loadCharacters();
-  }, [offset, characters]);
+  }, [offset, characters, totalChars]);
 
   const handlePreviousButton = () => {
     if (offset === 0) {
@@ -47,47 +70,25 @@ function Home() {
   };
 
   return (
-    <div style={{ marginBottom: 60 }}>
-      <h1 style={{ textAlign: 'center' }}>
-        Personagens ({`${offset + 20} de ${totalChars}`})
-      </h1>
+    <Container>
       {loading === true ? (
-        <h1>Carregando</h1>
+        <Loading />
       ) : (
-        <div>
-          <div style={{ textAlign: 'center', margin: 20 }}>
+        <ContainerCharacters>
+          <Title>Personagens ({`${offset + 20} de ${totalChars}`})</Title>
+          <ButtonContainer>
             <button type="button" onClick={handlePreviousButton}>
               Previous
             </button>
-            <button
-              style={{ marginLeft: 20 }}
-              type="button"
-              onClick={handleNextButton}
-            >
+            <button type="button" onClick={handleNextButton}>
               Next
             </button>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-            }}
-          >
+          </ButtonContainer>
+          <CardCharactersContainer>
             {characters.map((character) => (
               // eslint-disable-next-line react/no-array-index-key
-              <div
-                style={{
-                  width: 200,
-                  margin: 10,
-                  textAlign: 'center',
-                  border: '2px solid #A00001',
-                  boxShadow: '1px 4px 15px rgba(50, 50, 50, 0.77)',
-                }}
-              >
+              <CardCharacters>
                 <img
-                  style={{ width: 196, height: 200 }}
                   src={`${
                     character.thumbnail
                       ? `${character.thumbnail.path}.${character.thumbnail.extension}`
@@ -95,18 +96,30 @@ function Home() {
                   }`}
                   alt={character.name}
                 />
-                <p style={{ backgroundColor: '#ddd' }}>{character.name}</p>
-                <p style={{ fontSize: 12 }}>
-                  {character.description
-                    ? character.description
-                    : 'Personagem sem descrição'}
-                </p>
-              </div>
+                <CardDescriptionCharacters>
+                  <CharacterName numberOfLines={1} ellipsizeMode="middle">
+                    {character.name}
+                  </CharacterName>
+                  <CharacterDescription
+                    numberOfLines={1}
+                    ellipsizeMode="middle"
+                  >
+                    {character.description === ''
+                      ? 'Personagem sem descrição'
+                      : character.description}
+                  </CharacterDescription>
+                  <CharacterNumber>
+                    <p>Series {character.series.available}</p>
+                    <p>Comics {character.comics.available}</p>
+                    <p>Stories {character.stories.available}</p>
+                  </CharacterNumber>
+                </CardDescriptionCharacters>
+              </CardCharacters>
             ))}
-          </div>
-        </div>
+          </CardCharactersContainer>
+        </ContainerCharacters>
       )}
-    </div>
+    </Container>
   );
 }
 
