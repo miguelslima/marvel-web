@@ -144,41 +144,42 @@ function Home() {
                 ))}
               </CardCharactersContainer>
             ) : (
-              <CardCharactersContainer>
+              <>
                 <Title>Personagens ({`${offset + 20} de ${totalChars}`})</Title>
-
-                {characters.map((character) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <CardCharacters>
-                    <img
-                      src={`${
-                        character.thumbnail
-                          ? `${character.thumbnail.path}.${character.thumbnail.extension}`
-                          : null
-                      }`}
-                      alt={character.name}
-                    />
-                    <CardDescriptionCharacters>
-                      <CharacterName numberOfLines={1} ellipsizeMode="middle">
-                        {character.name}
-                      </CharacterName>
-                      <CharacterDescription
-                        numberOfLines={1}
-                        ellipsizeMode="middle"
-                      >
-                        {character.description === ''
-                          ? 'Personagem sem descrição'
-                          : character.description}
-                      </CharacterDescription>
-                      <CharacterNumber>
-                        <p>Series {character.series.available}</p>
-                        <p>Comics {character.comics.available}</p>
-                        <p>Stories {character.stories.available}</p>
-                      </CharacterNumber>
-                    </CardDescriptionCharacters>
-                  </CardCharacters>
-                ))}
-              </CardCharactersContainer>
+                <CardCharactersContainer>
+                  {characters.map((character) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <CardCharacters>
+                      <img
+                        src={`${
+                          character.thumbnail
+                            ? `${character.thumbnail.path}.${character.thumbnail.extension}`
+                            : null
+                        }`}
+                        alt={character.name}
+                      />
+                      <CardDescriptionCharacters>
+                        <CharacterName numberOfLines={1} ellipsizeMode="middle">
+                          {character.name}
+                        </CharacterName>
+                        <CharacterDescription
+                          numberOfLines={1}
+                          ellipsizeMode="middle"
+                        >
+                          {character.description === ''
+                            ? 'Personagem sem descrição'
+                            : character.description}
+                        </CharacterDescription>
+                        <CharacterNumber>
+                          <p>Series {character.series.available}</p>
+                          <p>Comics {character.comics.available}</p>
+                          <p>Stories {character.stories.available}</p>
+                        </CharacterNumber>
+                      </CardDescriptionCharacters>
+                    </CardCharacters>
+                  ))}
+                </CardCharactersContainer>
+              </>
             )}
           </ContainerCharacters>
         </>
