@@ -6,6 +6,14 @@ export const Container = styled.div`
 
 export const Title = styled.h1`
   text-align: center;
+
+  @media (max-width: 1080px) {
+    font-size: 24px;
+  }
+
+  @media (max-width: 720px) {
+    font-size: 22px;
+  }
 `;
 
 export const ContainerCharacters = styled.div``;
@@ -40,13 +48,15 @@ export const CardCharactersContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
+
+  margin-bottom: 90px;
 `;
 
 export const CardCharacters = styled.div`
   width: 200px;
   height: 400px;
   border-radius: 5px;
-  margin: 10px;
+  margin: 5px;
 
   text-align: center;
   border: 2px solid #a00001;
@@ -55,6 +65,11 @@ export const CardCharacters = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  &:hover {
+    transition: all 300ms ease-in;
+    transform: scale(1.05);
+  }
 
   img {
     border-top-left-radius: 3px;
@@ -97,7 +112,7 @@ export const CharacterDescription = styled.span`
   align-items: center;
 `;
 
-export const CharacterNumber = styled.div`
+export const CharacterNumber = styled.span`
   display: flex;
   padding: 5px 5px 5px 0;
 

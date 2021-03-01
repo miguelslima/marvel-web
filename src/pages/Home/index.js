@@ -102,7 +102,7 @@ function Home() {
         value={search}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        placeholder="Search for Characters by Name"
+        placeholder="Procure por um personagem pelo nome. Ex: Iron Man"
       />
       {isLoading ? (
         <Loading />
@@ -110,39 +110,49 @@ function Home() {
         <>
           <ContainerCharacters>
             {searchResults.length > 0 ? (
-              <CardCharactersContainer>
-                {searchResults.map((character) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <CardCharacters>
-                    <img
-                      src={`${
-                        character.thumbnail
-                          ? `${character.thumbnail.path}.${character.thumbnail.extension}`
-                          : null
-                      }`}
-                      alt={character.name}
-                    />
-                    <CardDescriptionCharacters>
-                      <CharacterName numberOfLines={1} ellipsizeMode="middle">
-                        {character.name}
-                      </CharacterName>
-                      <CharacterDescription
-                        numberOfLines={1}
-                        ellipsizeMode="middle"
-                      >
-                        {character.description === ''
-                          ? 'Personagem sem descrição'
-                          : character.description}
-                      </CharacterDescription>
-                      <CharacterNumber>
-                        <p>Series {character.series.available}</p>
-                        <p>Comics {character.comics.available}</p>
-                        <p>Stories {character.stories.available}</p>
-                      </CharacterNumber>
-                    </CardDescriptionCharacters>
-                  </CardCharacters>
-                ))}
-              </CardCharactersContainer>
+              <>
+                <CardCharactersContainer>
+                  {searchResults.map((character) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <CardCharacters>
+                      <img
+                        src={`${
+                          character.thumbnail
+                            ? `${character.thumbnail.path}.${character.thumbnail.extension}`
+                            : null
+                        }`}
+                        alt={character.name}
+                      />
+                      <CardDescriptionCharacters>
+                        <CharacterName numberOfLines={1} ellipsizeMode="middle">
+                          {character.name}
+                        </CharacterName>
+                        <CharacterDescription
+                          numberOfLines={1}
+                          ellipsizeMode="middle"
+                        >
+                          {character.description === ''
+                            ? 'Personagem sem descrição'
+                            : character.description}
+                        </CharacterDescription>
+                        <CharacterNumber>
+                          <p>Series {character.series.available}</p>
+                          <p>Comics {character.comics.available}</p>
+                          <p>Stories {character.stories.available}</p>
+                        </CharacterNumber>
+                      </CardDescriptionCharacters>
+                    </CardCharacters>
+                  ))}
+                </CardCharactersContainer>
+                <ButtonContainer>
+                  <button disabled type="button" onClick={handlePreviousButton}>
+                    Previous
+                  </button>
+                  <button type="button" onClick={handleNextButton}>
+                    Next
+                  </button>
+                </ButtonContainer>
+              </>
             ) : (
               <>
                 <Title>Personagens ({`${offset + 20} de ${totalChars}`})</Title>
@@ -184,14 +194,6 @@ function Home() {
           </ContainerCharacters>
         </>
       )}
-      <ButtonContainer>
-        <button type="button" onClick={handlePreviousButton}>
-          Previous
-        </button>
-        <button type="button" onClick={handleNextButton}>
-          Next
-        </button>
-      </ButtonContainer>
     </Container>
   );
 }
