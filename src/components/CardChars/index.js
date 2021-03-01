@@ -11,7 +11,12 @@ import {
 
 function CardChars({ character }) {
   return (
-    <CardCharacters>
+    <CardCharacters
+      to={{
+        pathname: '/character',
+        state: { id: `${character.id}` },
+      }}
+    >
       <img
         src={`${
           character.thumbnail

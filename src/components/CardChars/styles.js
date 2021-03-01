@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-export const CardCharacters = styled.div`
+export const CardCharacters = styled(Link)`
   width: 200px;
   height: 400px;
   border-radius: 5px;

@@ -13,18 +13,24 @@ function Home() {
 
   useEffect(() => {
     setIsLoading(true);
-    if (characters.length === 11) {
-      setIsLoading(false);
+    if (characters.length >= 11) {
       return;
     }
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < 11; i++) {
       readCharacterById(charIdHome[i], (results) => {
-        setCharacters((chars) => [...chars, results]);
+        if (characters.length >= 11) {
+          setIsLoading(false);
+          return;
+        }
+        if (characters.length < 11) {
+          setCharacters((chars) => [...chars, results]);
+        }
+        setIsLoading(false);
       });
     }
     setIsLoading(false);
-  }, [characters.length]);
+  }, []);
 
   return (
     <Container>
@@ -37,7 +43,7 @@ function Home() {
         listados alguns exemplos de dados vindo da API.
       </DescriptionProject>
 
-      {isLoading === true && <Loading />}
+      {isLoading && <Loading />}
 
       {characters.length > 0 &&
         characters.map((character) => <CardChars character={character} />)}
