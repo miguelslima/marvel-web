@@ -1,19 +1,34 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import { readCharacterById } from '../../services/api';
+import { charIdHome } from '../../utils/idCharsHome';
 
-// import { Container } from './styles';
+import Loading from '../../components/Loading';
+import CardChars from '../../components/CardChars';
+import { Container } from './styles';
 
 function Sobre() {
-  // eslint-disable-next-line no-unused-vars
-  const [characters, setCharacters] = useState(
-    JSON.parse(localStorage.getItem('@marvel/characters' || []))
-  );
+  const [isLoading, setIsLoading] = useState(true);
+  const [characters, setCharacters] = useState([]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < 11; i++) {
+      setIsLoading(true);
+      readCharacterById(charIdHome[i], (results) => {
+        setCharacters((chars) => [...chars, results]);
+      });
+    }
+    setIsLoading(false);
+  }, []);
 
   return (
-    <div>
-      <h1>Sobre</h1>
-    </div>
+    <Container>
+      {isLoading && <Loading />}
+
+      {characters.length > 0 &&
+        characters.map((character) => <CardChars character={character} />)}
+    </Container>
   );
 }
 

@@ -32,10 +32,9 @@ function Header() {
         }}
       >
         <Link to="/">Home</Link>
-        <Link to="/character">Personagens</Link>
+        <Link to="/characters">Personagens</Link>
         <Link to="/comics">Quadrinhos</Link>
         <Link to="/series">Séries</Link>
-        <Link to="/sobre">Sobre</Link>
       </div>
     </div>
   );

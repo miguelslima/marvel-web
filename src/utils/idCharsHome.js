@@ -1,4 +1,4 @@
-export const featuredChars = [
+export const charIdHome = [
   '1009664',
   '1010733',
   '1011010',

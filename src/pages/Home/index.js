@@ -1,199 +1,46 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { listCharacters } from '../../services/api';
+import { readCharacterById } from '../../services/api';
+import { charIdHome } from '../../utils/idCharsHome';
+
 import Loading from '../../components/Loading';
-import Search from '../../components/Search';
-import apiFake from '../../marvelApi.json';
-import {
-  Container,
-  Title,
-  ContainerCharacters,
-  ButtonContainer,
-  CardCharactersContainer,
-  CardCharacters,
-  CardDescriptionCharacters,
-  CharacterName,
-  CharacterDescription,
-  CharacterNumber,
-} from './styles';
+import CardChars from '../../components/CardChars';
+import { Container, Title, DescriptionProject } from './styles';
 
 function Home() {
   const [isLoading, setIsLoading] = useState(false);
-  const [totalChars, setTotalChars] = useState(0);
-
   const [characters, setCharacters] = useState([]);
 
-  const [offset, setOffset] = useState(0);
-  const [search, setSearch] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-
   useEffect(() => {
-    async function loadCharacters() {
-      setIsLoading(true);
-
-      await listCharacters(null, offset, (results) => {
-        if (results.code === 'RequestThrottled') {
-          setTotalChars(apiFake.data.total);
-          setCharacters(apiFake.data.results);
-        }
-        if (JSON.parse(localStorage.getItem('@marvel/characters').length > 0)) {
-          setCharacters(results.data.results);
-        }
-        setTotalChars(results.data.total);
-        setCharacters(results.data.results);
-      });
-      localStorage.setItem(
-        '@marvel/totalCharacters',
-        JSON.stringify(totalChars)
-      );
-      localStorage.setItem('@marvel/characters', JSON.stringify(characters));
+    setIsLoading(true);
+    if (characters.length === 11) {
       setIsLoading(false);
-    }
-
-    loadCharacters();
-  }, []);
-
-  const handlePreviousButton = () => {
-    if (offset === 0) {
       return;
     }
-
-    setOffset(offset - 20);
-  };
-
-  const handleNextButton = () => {
-    if (offset >= 0) {
-      setIsLoading(true);
-      setOffset(offset + 20);
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < 11; i++) {
+      readCharacterById(charIdHome[i], (results) => {
+        setCharacters((chars) => [...chars, results]);
+      });
     }
     setIsLoading(false);
-  };
-
-  const handleChange = (e) => {
-    e.preventDefault();
-    setSearch(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const query = search;
-    console.log(query);
-    setSearch(e.target.value);
-    await listCharacters(query, null, (results) => {
-      console.log(results);
-      if (results.code === 200) {
-        setSearchResults(results.data.results);
-      }
-    });
-
-    // const cachedHits = localStorage.getItem(query);
-
-    // if (cachedHits) {
-    //   this.setState({ hits: JSON.parse(cachedHits) });
-    // }
-
-    // this.props.history.push(`?query=${this.state.inputTerm}`);
-  };
-
-  console.log(searchResults);
+  }, [characters.length]);
 
   return (
     <Container>
-      <Search
-        value={search}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-        placeholder="Procure por um personagem pelo nome. Ex: Iron Man"
-      />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <ContainerCharacters>
-            {searchResults.length > 0 ? (
-              <>
-                <CardCharactersContainer>
-                  {searchResults.map((character) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <CardCharacters>
-                      <img
-                        src={`${
-                          character.thumbnail
-                            ? `${character.thumbnail.path}.${character.thumbnail.extension}`
-                            : null
-                        }`}
-                        alt={character.name}
-                      />
-                      <CardDescriptionCharacters>
-                        <CharacterName numberOfLines={1} ellipsizeMode="middle">
-                          {character.name}
-                        </CharacterName>
-                        <CharacterDescription
-                          numberOfLines={1}
-                          ellipsizeMode="middle"
-                        >
-                          {character.description === ''
-                            ? 'Personagem sem descrição'
-                            : character.description}
-                        </CharacterDescription>
-                        <CharacterNumber>
-                          <p>Series {character.series.available}</p>
-                          <p>Comics {character.comics.available}</p>
-                          <p>Stories {character.stories.available}</p>
-                        </CharacterNumber>
-                      </CardDescriptionCharacters>
-                    </CardCharacters>
-                  ))}
-                </CardCharactersContainer>
-                <ButtonContainer>
-                  <button disabled type="button" onClick={handlePreviousButton}>
-                    Previous
-                  </button>
-                  <button type="button" onClick={handleNextButton}>
-                    Next
-                  </button>
-                </ButtonContainer>
-              </>
-            ) : (
-              <>
-                <Title>Personagens ({`${offset + 20} de ${totalChars}`})</Title>
-                <CardCharactersContainer>
-                  {characters.map((character) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <CardCharacters>
-                      <img
-                        src={`${
-                          character.thumbnail
-                            ? `${character.thumbnail.path}.${character.thumbnail.extension}`
-                            : null
-                        }`}
-                        alt={character.name}
-                      />
-                      <CardDescriptionCharacters>
-                        <CharacterName numberOfLines={1} ellipsizeMode="middle">
-                          {character.name}
-                        </CharacterName>
-                        <CharacterDescription
-                          numberOfLines={1}
-                          ellipsizeMode="middle"
-                        >
-                          {character.description === ''
-                            ? 'Personagem sem descrição'
-                            : character.description}
-                        </CharacterDescription>
-                        <CharacterNumber>
-                          <p>Series {character.series.available}</p>
-                          <p>Comics {character.comics.available}</p>
-                          <p>Stories {character.stories.available}</p>
-                        </CharacterNumber>
-                      </CardDescriptionCharacters>
-                    </CardCharacters>
-                  ))}
-                </CardCharactersContainer>
-              </>
-            )}
-          </ContainerCharacters>
-        </>
-      )}
+      <Title>Sobre o projeto</Title>
+
+      <DescriptionProject>
+        Um pequeno projeto usando React para ilustrar recursos de REST do lado
+        do cliente de uma api pública veja mais em{' '}
+        <a href="https://developer.marvel.com/">API MARVEL</a>. Abaixo foram
+        listados alguns exemplos de dados vindo da API.
+      </DescriptionProject>
+
+      {isLoading === true && <Loading />}
+
+      {characters.length > 0 &&
+        characters.map((character) => <CardChars character={character} />)}
     </Container>
   );
 }
