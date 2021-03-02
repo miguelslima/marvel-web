@@ -37,12 +37,14 @@ export const CardDescriptionCharacters = styled.div`
 
 export const CharacterName = styled.p`
   height: 40px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  font-size: 16px;
+
+  font-size: 20px;
   font-weight: bold;
-  align-items: center;
+  padding: 8px;
+  max-width: 150ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   background: #444;
 
@@ -51,14 +53,18 @@ export const CharacterName = styled.p`
   border-bottom-style: solid;
 `;
 
-export const CharacterDescription = styled.span`
+export const CharacterDescription = styled.p`
   /* margin: 5px 10px 0; */
-  font-size: 11px;
-  height: 70px;
-  display: flex;
+  font-size: 14px;
+  max-height: 80px;
+  flex: display;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
+
+  max-width: 150ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
 `;
 
 export const CharacterNumber = styled.span`

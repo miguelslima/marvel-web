@@ -1,38 +1,53 @@
+/* eslint-disable react/jsx-no-target-blank */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { readCharacterById, listComics } from '../../services/api';
-// import { Container } from './styles';
+import { readCharacterById, listComics, listSeries } from '../../services/api';
+
+import Loading from '../../components/Loading';
+
+import {
+  Container,
+  CharacterHeader,
+  CharacterContainer,
+  Title,
+  DescriptionCharacter,
+  UrlsContainer,
+  ComicsContainer,
+  SeriesContainer,
+} from './styles';
 
 function Character() {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [character, setCharacter] = useState([]);
   const [comics, setComics] = useState([]);
+  const [series, setSeries] = useState([]);
   const data = useLocation();
 
   useEffect(() => {
     const handleSearch = () => {
       if (character.length === 0) {
-        setLoading(true);
+        setIsLoading(true);
       }
       readCharacterById(data.state.id, (char) => {
         setCharacter(char);
       });
       listComics(data.state.id, (comic) => setComics(comic));
-      setLoading(false);
+      listSeries(data.state.id, (serie) => setSeries(serie));
+      setIsLoading(false);
     };
     handleSearch();
-  }, [data, character]);
+  }, []);
 
   return (
-    <div>
-      {loading === true ? (
-        <h1>Carregando</h1>
+    <Container>
+      {isLoading === true ? (
+        <Loading />
       ) : (
-        <div style={{ padding: 20 }}>
-          <h1>{character.name}</h1>
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <CharacterContainer>
+          <Title>{character.name}</Title>
+          <CharacterHeader>
             <img
-              style={{ width: 200, height: 200 }}
               src={`${
                 character.thumbnail
                   ? `${character.thumbnail.path}.${character.thumbnail.extension}`
@@ -40,47 +55,44 @@ function Character() {
               }`}
               alt={character.name}
             />
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <DescriptionCharacter>
               <p>
                 {character.description
                   ? character.description
                   : 'Não há descrição para esse herói'}
               </p>
               <ul className="featured-character__links">
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <UrlsContainer>
                   {character.urls
                     ? character.urls.map((link) => (
-                        <li
-                          style={{ padding: 20 }}
-                          className="feature-character__link"
-                        >
-                          <a href={link.url}>{link.type}</a>
+                        <li className="feature-character__link">
+                          <a href={link.url} target="_blank">
+                            {link.type}
+                          </a>
                         </li>
                       ))
                     : null}
-                </div>
+                </UrlsContainer>
               </ul>
-            </div>
-          </div>
+            </DescriptionCharacter>
+          </CharacterHeader>
 
-          <div style={{ marginBottom: 80 }}>
-            <h3>Comics</h3>
+          <ComicsContainer>
+            <h2>Comics</h2>
             {comics.map((comic) => (
-              <img
-                style={{
-                  width: 200,
-                  height: 150,
-                  margin: 10,
-                  boxShadow: '9px 7px 5px rgba(50, 50, 50, 0.77)',
-                }}
-                src={comic}
-                alt=""
-              />
+              <img src={comic} alt="" />
             ))}
-          </div>
-        </div>
+          </ComicsContainer>
+
+          <SeriesContainer>
+            <h2>Series</h2>
+            {series.map((serie) => (
+              <img src={serie} alt="" />
+            ))}
+          </SeriesContainer>
+        </CharacterContainer>
       )}
-    </div>
+    </Container>
   );
 }
 

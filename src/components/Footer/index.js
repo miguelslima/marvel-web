@@ -1,13 +1,13 @@
 import React from 'react';
 
-import './styles.css';
+import { Container } from './styles';
 
 function Footer() {
   return (
-    <footer>
+    <Container>
       <p>Data provided by Marvel. © 2014 Marvel</p>
       <p>Feito por Miguel Lima</p>
-    </footer>
+    </Container>
   );
 }
 

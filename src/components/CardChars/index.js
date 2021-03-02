@@ -26,10 +26,8 @@ function CardChars({ character }) {
         alt={character.name}
       />
       <CardDescriptionCharacters>
-        <CharacterName numberOfLines={1} ellipsizeMode="middle">
-          {character.name}
-        </CharacterName>
-        <CharacterDescription numberOfLines={1} ellipsizeMode="middle">
+        <CharacterName numberOfLines={1}>{character.name}</CharacterName>
+        <CharacterDescription numberOfLines={5}>
           {character.description === ''
             ? 'Personagem sem descrição'
             : character.description}
