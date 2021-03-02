@@ -46,7 +46,7 @@ export const CharacterName = styled.p`
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  background: #444;
+  background: #bbb;
 
   border-bottom-width: 2px;
   border-bottom-color: #a00001;
