@@ -1,10 +1,13 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+import { createGlobalStyle } from 'styled-components';
 
-:root {
+export const GlobalStyles = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
   --white: #fff;
   --background: #f2f3f5;
   --gray-line: #dcdde0;
@@ -39,11 +42,15 @@
 }
 
 body {
+  align-items: center;
+  background: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.text};
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  background: var(--background);
-  color: var(--text);
+
+  font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  transition: all 0.25s linear;
 }
 
 html {
@@ -79,3 +86,5 @@ ul {
   margin: 0px;
   list-style-type: none;
 }
+
+`;

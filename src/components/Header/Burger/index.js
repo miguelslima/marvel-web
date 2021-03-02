@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import RightNav from '../RightNav';
 
 import { StyledBurger } from './styles';
 
-const Burger = () => {
+const Burger = ({ theme, toggleTheme }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -13,7 +14,8 @@ const Burger = () => {
         <div />
         <div />
       </StyledBurger>
-      <RightNav open={open} />
+
+      <RightNav theme={theme} toggleTheme={toggleTheme} open={open} />
     </>
   );
 };

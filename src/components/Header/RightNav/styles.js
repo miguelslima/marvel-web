@@ -4,6 +4,7 @@ export const Ul = styled.ul`
   width: 100%;
   list-style: none;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -44,5 +45,26 @@ export const Ul = styled.ul`
     img {
       display: none;
     }
+
+    svg {
+      display: inline-block;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+`;
+
+export const ToggleContainer = styled.button`
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background: transparent;
+  width: 8rem;
+  height: 4rem;
+
+  svg {
+    height: auto;
+    transition: all 0.3s linear;
   }
 `;

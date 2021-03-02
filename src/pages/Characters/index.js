@@ -47,7 +47,7 @@ function Characters() {
     }
 
     loadCharacters();
-  }, []);
+  }, [offset]);
 
   const handlePreviousButton = () => {
     if (offset === 0) {
@@ -114,14 +114,6 @@ function Characters() {
                     <CardChars character={character} />
                   ))}
                 </CardCharactersContainer>
-                <ButtonContainer>
-                  <button disabled type="button" onClick={handlePreviousButton}>
-                    Previous
-                  </button>
-                  <button type="button" onClick={handleNextButton}>
-                    Next
-                  </button>
-                </ButtonContainer>
               </>
             ) : (
               <>
@@ -132,6 +124,14 @@ function Characters() {
                     <CardChars character={character} />
                   ))}
                 </CardCharactersContainer>
+                <ButtonContainer>
+                  <button disabled type="button" onClick={handlePreviousButton}>
+                    Previous
+                  </button>
+                  <button type="button" onClick={handleNextButton}>
+                    Next
+                  </button>
+                </ButtonContainer>
               </>
             )}
           </ContainerCharacters>
