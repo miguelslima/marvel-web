@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import md5 from 'md5';
 
-const MAX_RESULTS = 20;
+const MAX_RESULTS = 100;
 const API_BASE_URL = 'https://gateway.marvel.com/v1/public/';
 
 // const getMaxResults = () => {
@@ -33,7 +33,9 @@ const getListCharactersURL = (name, offset) => {
 };
 
 const readComicURL = (id) => {
-  return `${API_BASE_URL}characters/${id}/comics?${getHash()}`;
+  return `${API_BASE_URL}characters/${id}/comics?&limit=${
+    MAX_RESULTS - 60
+  }&${getHash()}`;
 };
 
 export const listComics = (id, callback) => {
@@ -50,7 +52,9 @@ export const listComics = (id, callback) => {
 };
 
 const readSeriesURL = (id) => {
-  return `${API_BASE_URL}characters/${id}/series?${getHash()}`;
+  return `${API_BASE_URL}characters/${id}/series?&limit=${
+    MAX_RESULTS - 60
+  }&${getHash()}`;
 };
 
 export const listSeries = (id, callback) => {

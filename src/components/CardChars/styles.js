@@ -45,8 +45,8 @@ export const CharacterName = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  background: #bbb;
+  color: ${({ theme }) => theme.titleBg};
+  background-color: ${({ theme }) => theme.headerBg};
 
   border-bottom-width: 2px;
   border-bottom-color: #a00001;
@@ -55,13 +55,14 @@ export const CharacterName = styled.p`
 
 export const CharacterDescription = styled.p`
   /* margin: 5px 10px 0; */
-  font-size: 14px;
-  max-height: 80px;
+  font-size: 11px;
+  max-height: 90px;
+  padding: 0 10px;
   flex: display;
   flex-direction: row;
   align-items: center;
 
-  max-width: 150ch;
+  max-width: 145ch;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: pre-wrap;

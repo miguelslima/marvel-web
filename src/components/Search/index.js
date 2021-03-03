@@ -3,11 +3,12 @@ import React from 'react';
 import { Container, Input } from './styles';
 
 // eslint-disable-next-line react/prop-types
-const Search = ({ handleSubmit, handleChange, placeholder }) => {
+const Search = ({ value, handleSubmit, handleChange, placeholder }) => {
   return (
     <Container>
       <form onSubmit={handleSubmit}>
         <Input
+          value={value}
           type="text"
           placeholder={placeholder}
           onChange={handleChange}

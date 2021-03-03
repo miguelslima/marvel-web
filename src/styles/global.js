@@ -49,7 +49,7 @@ body {
   flex-direction: column;
   min-height: 100%;
 
-  font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   transition: all 0.25s linear;
 }
 
@@ -68,7 +68,7 @@ body,
 input,
 textarea,
 button {
-  font: 400 1rem 'Inter', sans-serif;
+  font: 400 1rem 'Roboto', sans-serif;
   outline: none;
 }
 

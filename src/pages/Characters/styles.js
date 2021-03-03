@@ -6,14 +6,7 @@ export const Container = styled.div`
 
 export const Title = styled.h1`
   text-align: center;
-
-  @media (max-width: 1080px) {
-    font-size: 24px;
-  }
-
-  @media (max-width: 720px) {
-    font-size: 22px;
-  }
+  margin-bottom: 20px;
 `;
 
 export const ContainerCharacters = styled.div``;

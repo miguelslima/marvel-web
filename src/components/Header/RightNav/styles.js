@@ -9,7 +9,7 @@ export const Ul = styled.ul`
   align-items: center;
   width: 100%;
   flex-flow: row nowrap;
-  background-color: #a00001;
+  background-color: ${({ theme }) => theme.headerBg};
 
   a {
     margin-right: 20px;
@@ -24,7 +24,7 @@ export const Ul = styled.ul`
 
   @media (max-width: 768px) {
     flex-flow: column nowrap;
-    background-color: #a00001;
+    background-color: #393939;
     position: fixed;
     align-items: flex-start;
     justify-content: flex-start;

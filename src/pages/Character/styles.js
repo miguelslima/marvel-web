@@ -47,12 +47,12 @@ export const UrlsContainer = styled.div`
   align-items: center;
 
   li {
-    font-size: 14px;
+    font-size: 16px;
     color: #fff;
     background: #a00001;
-    padding: 15px;
+    padding: 10px;
     margin: 0 10px;
-    border-radius: 20px;
+    border-radius: 10px;
     transition: opacity 0.3s;
   }
 

@@ -39,6 +39,10 @@ export const Container = styled.div`
       margin-bottom: 10px;
     }
   }
+
+  @media screen {
+    margin-top: 60px;
+  }
 `;
 
 export const Input = styled.input`

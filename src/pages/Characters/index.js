@@ -54,13 +54,13 @@ function Characters() {
       return;
     }
 
-    setOffset(offset - 20);
+    setOffset(offset - 100);
   };
 
   const handleNextButton = () => {
     if (offset >= 0) {
       setIsLoading(true);
-      setOffset(offset + 20);
+      setOffset(offset + 100);
     }
     setIsLoading(false);
   };
@@ -73,12 +73,11 @@ function Characters() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const query = search;
-    console.log(query);
     setSearch(e.target.value);
     await listCharacters(query, null, (results) => {
-      console.log(results);
       if (results.code === 200) {
         setSearchResults(results.data.results);
+        setSearch('');
       }
     });
 
@@ -90,8 +89,6 @@ function Characters() {
 
     // this.props.history.push(`?query=${this.state.inputTerm}`);
   };
-
-  console.log(searchResults);
 
   return (
     <Container>
@@ -108,6 +105,7 @@ function Characters() {
           <ContainerCharacters>
             {searchResults.length > 0 ? (
               <>
+                <Title>Resultado da busca</Title>
                 <CardCharactersContainer>
                   {searchResults.map((character) => (
                     // eslint-disable-next-line react/no-array-index-key
@@ -117,7 +115,9 @@ function Characters() {
               </>
             ) : (
               <>
-                <Title>Personagens ({`${offset + 20} de ${totalChars}`})</Title>
+                <Title>
+                  Personagens ({`${offset + 100} de ${totalChars}`})
+                </Title>
                 <CardCharactersContainer>
                   {characters.map((character) => (
                     // eslint-disable-next-line react/no-array-index-key
