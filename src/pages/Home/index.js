@@ -8,10 +8,9 @@ import CardChars from '../../components/CardChars';
 import { Container, Title, DescriptionProject } from './styles';
 
 function Home() {
+  const localUser = JSON.parse(localStorage.getItem('@marvel/charsHome')) || [];
   const [isLoading, setIsLoading] = useState(false);
-  const [characters, setCharacters] = useState(
-    JSON.parse(localStorage.getItem('@marvel/charsHome') || [])
-  );
+  const [characters, setCharacters] = useState(localUser);
 
   useEffect(() => {
     setIsLoading(true);

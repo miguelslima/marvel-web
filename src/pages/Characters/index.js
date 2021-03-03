@@ -14,14 +14,15 @@ import {
 } from './styles';
 
 function Characters() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [totalChars, setTotalChars] = useState(
-    JSON.parse(localStorage.getItem('@marvel/totalCharacters') || 0)
-  );
+  const localUser =
+    JSON.parse(localStorage.getItem('@marvel/characters')) || [];
+  const countLocalUser =
+    JSON.parse(localStorage.getItem('@marvel/totalCharacters')) || [];
 
-  const [characters, setCharacters] = useState(
-    JSON.parse(localStorage.getItem('@marvel/characters') || [])
-  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [totalChars, setTotalChars] = useState(countLocalUser);
+
+  const [characters, setCharacters] = useState(localUser);
 
   const [offset, setOffset] = useState(0);
   const [search, setSearch] = useState('');
