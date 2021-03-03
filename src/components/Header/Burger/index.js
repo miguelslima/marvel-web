@@ -15,7 +15,12 @@ const Burger = ({ theme, toggleTheme }) => {
         <div />
       </StyledBurger>
 
-      <RightNav theme={theme} toggleTheme={toggleTheme} open={open} />
+      <RightNav
+        theme={theme}
+        toggleTheme={toggleTheme}
+        setOpen={setOpen}
+        open={open}
+      />
     </>
   );
 };
