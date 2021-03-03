@@ -21,8 +21,8 @@
 
 ## :bookmark: Sobre
 
-O <strong>Marvel Web</strong> é uma aplicação web desenvolvida listar os personagens, quadrinhos e séries da Marvel Api<br><br>
-Nesse projeto você pode pesquisar pelo personagem e ver suas séries e quadrinhos.
+O <strong>Marvel Web</strong> é uma aplicação web desenvolvida listar os personagens, quadrinhos e séries da Marvel Api(https://developer.marvel.com/)<br><br>
+Nesse projeto você pode pesquisar pelo personagem e ver suas séries e quadrinhos. Opção de tema Dark e ligth foi implementado nesse projeto, persistindo a escolha do usuário. A página de quadrinhos e séries não estão desensolvidas, mostrando a página 404 implementada no projeto. O projeto foi desenvolvido como Teste para vaga de Front-end. Por isso as páginas quadrinhos e séries não foram implementdas
 <br><br>
 
 <a id="tecnologias-utilizadas"></a>
