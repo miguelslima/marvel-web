@@ -1,5 +1,5 @@
 <h3 align="center">
-    <img alt="Logo" title="#logo" width="400px" height="600px" src="https://images-na.ssl-images-amazon.com/images/I/710-2HTjwZL._AC_SL1000_.jpg">
+    <img alt="Logo" title="#logo" width="800px" height="600px" src="https://images-na.ssl-images-amazon.com/images/I/710-2HTjwZL._AC_SL1000_.jpg">
     <br><br>
     <br>
 </h3>
