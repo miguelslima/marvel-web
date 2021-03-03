@@ -6,7 +6,10 @@ function NotFound404() {
   return (
     <Container>
       <Overlay>
-        <Title>Página não encontrada</Title>
+        <Title>
+          A página que você requisitou não foi encontrada ou encontra-se em
+          construção
+        </Title>
       </Overlay>
     </Container>
   );

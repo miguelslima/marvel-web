@@ -16,8 +16,6 @@ export const ButtonContainer = styled.div`
   justify-content: center;
   margin: 20px 0;
 
-  margin-bottom: 80px;
-
   button {
     margin-left: 10px;
     width: 100px;
@@ -25,7 +23,8 @@ export const ButtonContainer = styled.div`
     border: 0;
     padding: 10px;
     border-radius: 10px;
-    background: #a00001;
+    background-color: #a00001;
+
     color: #fff;
 
     transition: opacity 0.3s;

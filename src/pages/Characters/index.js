@@ -15,9 +15,13 @@ import {
 
 function Characters() {
   const [isLoading, setIsLoading] = useState(false);
-  const [totalChars, setTotalChars] = useState(0);
+  const [totalChars, setTotalChars] = useState(
+    JSON.parse(localStorage.getItem('@marvel/totalCharacters') || 0)
+  );
 
-  const [characters, setCharacters] = useState([]);
+  const [characters, setCharacters] = useState(
+    JSON.parse(localStorage.getItem('@marvel/characters') || [])
+  );
 
   const [offset, setOffset] = useState(0);
   const [search, setSearch] = useState('');
@@ -26,38 +30,44 @@ function Characters() {
   useEffect(() => {
     async function loadCharacters() {
       setIsLoading(true);
-
       await listCharacters(null, offset, (results) => {
         if (results.code === 'RequestThrottled') {
           setTotalChars(apiFake.data.total);
           setCharacters(apiFake.data.results);
+          setIsLoading(false);
         }
+
         if (JSON.parse(localStorage.getItem('@marvel/characters').length > 0)) {
           setCharacters(results.data.results);
+          setIsLoading(false);
         }
+
         setTotalChars(results.data.total);
         setCharacters(results.data.results);
+
+        localStorage.setItem(
+          '@marvel/totalCharacters',
+          JSON.stringify(totalChars)
+        );
+        localStorage.setItem('@marvel/characters', JSON.stringify(characters));
       });
-      localStorage.setItem(
-        '@marvel/totalCharacters',
-        JSON.stringify(totalChars)
-      );
-      localStorage.setItem('@marvel/characters', JSON.stringify(characters));
-      setIsLoading(false);
     }
 
     loadCharacters();
   }, [offset]);
 
   const handlePreviousButton = () => {
+    setIsLoading(true);
     if (offset === 0) {
       return;
     }
 
     setOffset(offset - 100);
+    setIsLoading(false);
   };
 
   const handleNextButton = () => {
+    setIsLoading(true);
     if (offset >= 0) {
       setIsLoading(true);
       setOffset(offset + 100);
@@ -118,20 +128,20 @@ function Characters() {
                 <Title>
                   Personagens ({`${offset + 100} de ${totalChars}`})
                 </Title>
-                <CardCharactersContainer>
-                  {characters.map((character) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <CardChars character={character} />
-                  ))}
-                </CardCharactersContainer>
                 <ButtonContainer>
-                  <button disabled type="button" onClick={handlePreviousButton}>
+                  <button type="button" onClick={handlePreviousButton}>
                     Previous
                   </button>
                   <button type="button" onClick={handleNextButton}>
                     Next
                   </button>
                 </ButtonContainer>
+                <CardCharactersContainer>
+                  {characters.map((character) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <CardChars character={character} />
+                  ))}
+                </CardCharactersContainer>
               </>
             )}
           </ContainerCharacters>

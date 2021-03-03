@@ -17,11 +17,12 @@ export const Overlay = styled.div`
   display: flex;
   flex: 1;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
 `;
 
 export const Title = styled.h1`
-  margin-top: 50px;
   font-weight: bold;
-  color: #fff;
+  color: #a00001;
+  text-align: center;
 `;

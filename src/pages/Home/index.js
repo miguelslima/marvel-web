@@ -9,27 +9,33 @@ import { Container, Title, DescriptionProject } from './styles';
 
 function Home() {
   const [isLoading, setIsLoading] = useState(false);
-  const [characters, setCharacters] = useState([]);
+  const [characters, setCharacters] = useState(
+    JSON.parse(localStorage.getItem('@marvel/charsHome') || [])
+  );
 
   useEffect(() => {
     setIsLoading(true);
-    if (characters.length >= 11) {
-      setIsLoading(false);
-      return;
-    }
+
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < 11; i++) {
+      setIsLoading(true);
       readCharacterById(charIdHome[i], (results) => {
         if (characters.length >= 11) {
+          setIsLoading(false);
           return;
         }
         if (characters.length < 11) {
           setCharacters((chars) => [...chars, results]);
         }
+        if (JSON.parse(localStorage.getItem('@marvel/charsHome').length > 0)) {
+          setCharacters(results.data.results);
+        }
+        setIsLoading(false);
       });
-      setIsLoading(false);
     }
   }, []);
+
+  localStorage.setItem('@marvel/charsHome', JSON.stringify(characters));
 
   return (
     <Container>
