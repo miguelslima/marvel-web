@@ -27,11 +27,20 @@ function Characters() {
   const [offset, setOffset] = useState(0);
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   useEffect(() => {
     async function loadCharacters() {
       setIsLoading(true);
+
+      if (offset === 0 && offset < 99) {
+        setButtonDisabled(true);
+      } else if (offset > 99) {
+        setButtonDisabled(false);
+      }
+
       await listCharacters(null, offset, (results) => {
+        console.log(offset);
         if (results.code === 'RequestThrottled') {
           setTotalChars(apiFake.data.total);
           setCharacters(apiFake.data.results);
@@ -130,7 +139,11 @@ function Characters() {
                   Personagens ({`${offset + 100} de ${totalChars}`})
                 </Title>
                 <ButtonContainer>
-                  <button type="button" onClick={handlePreviousButton}>
+                  <button
+                    disabled={buttonDisabled}
+                    type="button"
+                    onClick={handlePreviousButton}
+                  >
                     Previous
                   </button>
                   <button type="button" onClick={handleNextButton}>
